@@ -7,11 +7,12 @@
 
 ### Demonstration of Learning Targets
 
+Lab 2
+
 ### Demonstration of Continued Learning
 
 #### Revising My Thinking
 
 Lab 3 Revision
 
-### Growth as a Team Member
 
