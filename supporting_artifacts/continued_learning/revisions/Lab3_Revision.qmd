@@ -14,7 +14,7 @@ library(tidyverse)
 
 ```{r}
 #| message: false
-hiphop <- read.csv(here::here("Lab" , "Lab 3" , "hiphop.csv"))
+hiphop <- read.csv(here::here("supporting_artifacts", "Datasets" , "hiphop.csv"))
 ```
 
 ## Problem 1
@@ -28,6 +28,12 @@ Looking at this dataset, there are 10752 observations and 38 variables. There ar
 
 \*Additional revision done for the Portfolio
 
+*Where was this study conducted?*
+
+*How was the sample of participants selected? How many students were in the sample?*
+
+*How were the participants definitions coded?*
+
 The study was conducted at the University of Minnesota. There are 168 participants and they were students who were enrolled in undergraduate linguistics, sociology, and music classes. The participants definitions were coded to a five-point Likert scale.
 
 ## Problem 2
@@ -39,6 +45,8 @@ The rows are the different 64 AAE terms. There are 168 participants so there are
 The variables SAAMEMove and blackWeekly had missing values replaced with the mean values of the respective variables. This would cause problems when we need to do analysis on these variables. An example would be if we would want to graph these variables. The graph would be skewed with these replaced values and won't represent the true distribution of these variables.
 
 \*Additional revision done for the Portfolio
+
+*If this is a bad idea, what is a benefit of doing this?*
 
 A benefit in doing this would be that we won't have missing values. A lot of the times when data scientist explore a data set, it is a good practice to usually drop missing values if it doesn't help with our observations.
 
@@ -55,6 +63,8 @@ I don't believe there is a need to remove the NAs for the variables numOverallAr
 ## Problem 5
 
 \*Additional revision done for the Portfolio
+
+*I\'d like to see a single output for the number of words, not a table.*
 
 ```{r}
 hiphop %>% 
@@ -89,6 +99,8 @@ There are 117 females and 51 males that participated in this research. The oldes
 
 \*Additional revision done for the Portfolio
 
+*Plot titles are generally discouraged unless they include information **not** captured by either axis label*
+
 ```{r}
 #| message: false
 ggplot(data = distinct_hiphop, 
@@ -104,6 +116,10 @@ ggplot(data = distinct_hiphop,
 ```
 
 ### Familiar words
+
+\*Additional revision done for the Portfolio
+
+*Your code chunks should accomplish **one** task.*
 
 ```{r}
 # a
@@ -146,6 +162,8 @@ For people below the age of 20, the words 'off the hook' is the most familiar on
 ### Study Subjects
 
 \*Additional revision done for the Portfolio
+
+*You have long lines of code. Please use new lines!*
 
 ```{r}
 jb <- hiphop %>% 
