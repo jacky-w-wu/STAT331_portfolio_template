@@ -1,0 +1,165 @@
+---
+title: "Lab 3"
+author: Jacky Wu
+format: html
+editor: visual
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+```{r}
+#| message: false
+hiphop <- read.csv(here::here("Lab" , "Lab 3" , "hiphop.csv"))
+```
+
+## Problem 1
+
+```{r}
+nrow(hiphop)
+ncol(hiphop)
+```
+
+Looking at this dataset, there are 10752 observations and 38 variables. There are a lot of NA in the dataset, specifically for variables numOverallArtist and numPreferredArtist. The NA indicates that the artist don't include the specific word in their songs.
+
+\*Additional revision done for the Portfolio
+
+The study was conducted at the University of Minnesota. There are 168 participants and they were students who were enrolled in undergraduate linguistics, sociology, and music classes. The participants definitions were coded to a five-point Likert scale.
+
+## Problem 2
+
+The rows are the different 64 AAE terms. There are 168 participants so there are 168 rows for each of the 64 AAE terms hence the 10752 observations.
+
+## Problem 3
+
+The variables SAAMEMove and blackWeekly had missing values replaced with the mean values of the respective variables. This would cause problems when we need to do analysis on these variables. An example would be if we would want to graph these variables. The graph would be skewed with these replaced values and won't represent the true distribution of these variables.
+
+\*Additional revision done for the Portfolio
+
+A benefit in doing this would be that we won't have missing values. A lot of the times when data scientist explore a data set, it is a good practice to usually drop missing values if it doesn't help with our observations.
+
+## Problem 4
+
+```{r}
+hiphop <- hiphop %>% 
+  mutate(across(where(is.character), as.factor)) %>% 
+  drop_na(word:popularityScore)
+```
+
+I don't believe there is a need to remove the NAs for the variables numOverallArtist and numPreferredArtist. In this dataset it means that the word isn't in the artist's song, not necessarily that the values are missing.
+
+## Problem 5
+
+\*Additional revision done for the Portfolio
+
+```{r}
+hiphop %>% 
+  distinct(word) %>% 
+  nrow()
+```
+
+Using the count function, there are 64 AAE words that are studied in this dataset.
+
+## Problem 6
+
+```{r}
+hiphop <- hiphop %>% 
+  mutate(ethnic, ethnic = as.factor(ifelse(ethnic == 'white', "white", "non-white")))
+```
+
+## Problem 7
+
+```{r}
+distinct_hiphop <- hiphop %>%
+  distinct(subj, .keep_all = TRUE) 
+distinct_hiphop %>% 
+  select(sex:ethnic) %>% 
+  summary()
+```
+
+There are 117 females and 51 males that participated in this research. The oldest participant is 48 years old and the youngest is 16 years old, and the average age of participants in this research is 20 years old. There are 135 white and 33 non-white participants in this research. This summary shows that there might be a bias in our results as there is a disproportional amount of amount of females and whites in the research compared to its counterparts.
+
+## Problem 8
+
+### Plots
+
+\*Additional revision done for the Portfolio
+
+```{r}
+#| message: false
+ggplot(data = distinct_hiphop, 
+       mapping = aes(x = sex, y = age)) +
+  geom_boxplot() +
+  facet_wrap(~ethnic) +
+  labs(x = "Partcipant's sex", y = "Partcipant's age")
+ggplot(data = distinct_hiphop, 
+       mapping = aes(x = age)) +
+  facet_wrap(~sex) +
+  geom_histogram() +
+  labs(x = "Partcipant's age", y = "Number of Participants")
+```
+
+### Familiar words
+
+```{r}
+# a
+below20 <- hiphop %>% 
+  filter(age < 20) %>% 
+  group_by(word) %>%
+  summarise(across(familiarity, mean)) 
+below20 %>% 
+  slice_max(familiarity)
+below20 %>% 
+  slice_min(familiarity)
+```
+
+```{r}
+# b
+non_white_woman <- hiphop %>% 
+  filter(ethnic != 'white', sex == 'Female') %>% 
+  group_by(word) %>%
+  summarise(across(familiarity, mean))
+non_white_woman %>% 
+  slice_max(familiarity)
+non_white_woman %>% 
+  slice_min(familiarity)
+```
+
+```{r}
+# c
+white_man_above_30 <- hiphop %>% 
+  filter(ethnic == 'white', sex == 'Male', age > 30) %>% 
+  group_by(word) %>%
+  summarise(across(familiarity, mean))
+white_man_above_30  %>% 
+  slice_max(familiarity)
+white_man_above_30  %>%
+  slice_min(familiarity)
+```
+
+For people below the age of 20, the words 'off the hook' is the most familiar on average and the words 'catch the vapors' were the least familiar on average. For people that are non-white women, the words 'feel me' is the most familiar on average and the words 'break someone out', 'dukey rope', 'plex', and 'rollie' were the least familiar on average. For people that are white men above the age of 30, the words 'May-00' is the most familiar on average and there are 25 words that are the least familiar on average as shown in the code above.
+
+### Study Subjects
+
+\*Additional revision done for the Portfolio
+
+```{r}
+jb <- hiphop %>% 
+  filter(ethnic == 'white', sex == 'Male', 
+         city %in% 10000:60000, 
+         age %in% 17:23) %>% 
+  distinct(subj, .keep_all = TRUE) 
+jb %>% 
+  select(subj, bieber) %>% 
+  slice_max(bieber)
+```
+
+After filtering the data set to fit the description of Justin Bieber, I believe that subject 17 is the most likely candidate to be Justin Bieber. I used the variable to bieber to come to my conclusion. The variable beiber indicates the number of Justin Bieber songs the participants know up to five songs, 1 being zero songs and 6 being five songs. Subject 17 had a 5 in the variable beiber meaning the participant knows four songs. If the participant is Justin Beiber, he should know his own songs. Looking at the other participants in the filtered dataset, the next highest number for the variable is beiber, which indicates that the particant only knows one song from Justin Beiber. This highly indicates that all the other participants in the filtered data isn't Justin Beiber since it would be ivery unlikely to only know one or none of the multiple songs you created. The only problem I have with this conclusion is that subject 17 got a 5 instead of a 6 for the variable beiber. If subject 17 is truly Justin Beiber, he should know five of his own songs.
+
+# Reflection
+
+When looking at a data set, it is good practice to look at where the experiment took place and how the participants were selected. It is also a good idea to understand the way a definition is coded in the data set. I also learned that plots don't need titles unless they add more information that isn't already captured by the axis labels. I also learned that it is better to have a code chunk complete a single task rather than have it complete multiple tasks as it can get crowded. I also don't have to fit code into a single line and can separate them into different lines without having the code not run.
