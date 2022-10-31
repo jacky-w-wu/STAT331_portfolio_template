@@ -1,11 +1,20 @@
 ---
 title: "Final Grade Reflection"
-author: "Your Name Goes Here"
+author: "Jacky Wu"
 format: pdf
 editor: visual
 ---
 
-In this document, you make a data-based argument for the grade you've earned in this course. Your argument should include evidence from the supporting artifacts you've provided. 
+# Week 6 Reflection
 
-The output document should be a PDF or a Word Document, as it should be a **maximum** of 2-pages. 
----
+I believe that my current grade would be a C at this moment. I am still able to learn and demonstrate learning targets at a satisfactory level in my lab and challenges activities. The learning targets I believe that I have demonstrated an understanding of are working with data, data visualization and reproducibility. The problem is that I haven't been submitting my assignments on time due to time constraints. I just submitted Lab 4 and Challenge 3 and 4 this week and I still need to work on Lab 5. I approved on extending my learning as I have completed all the revisions I can, submitting one this week and completing an extra revision for this portfolio. As for collaborative group work, I do work with my group on assignments and try to help them whenever I can.
+
+I have demonstrated several criteria of the learning target of working with data. I am able to import data such as CSV files and work on it in Rstudio as shown in both Lab 2 and my Lab 3 Revision. I am able to select the necessary columns I need to do my analysis using the select function which I accomplished in Lab 3 in problems 7 and the problem looking for Justin Bieber. I am able to filter out the data and only show data that are necessary to solve the problem at hand using the filter function such as the Justin Bieber problem in Lab 3. I am also able to modify existing variables or create new variables in a data frame by using the mutate function which I've shown throughout Lab 3.
+
+As for data visualization, I am able to create different types of graphs using data from a data frame and I am able to provide the audience the ease of reading the graph by properly labeling my axis and providing a title. I have shown this in both Lab 2 and Lab 3 Revisions. Lab 2 focused more on data visualization and I have shown the different things I can add onto a graph such as jittering, faceting, and labeling. I can also create different types of graphs such as boxplots and histograms as shown in Lab 3 Problem 8. In that same problem, I demonstrated that I could label and facet.
+
+I also create professional looking Quarto documents by hiding messages that doesn't need to be shown such as the set up for the assignment as shown in both Lab 2 and Lab 3. I am also able to write tidy code as shown in my Lab 3 revision where I made sure to not compact code in a single line.
+
+ 
+
+\
