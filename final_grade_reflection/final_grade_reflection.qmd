@@ -13,7 +13,7 @@ I believe that my final grade I earned in this class is a B-.
 
 ### Working with Data
 
-I demonstrated WD-1 in Lab 2 Reading the Data into R Problem 1 at a proficient level.
+I demonstrated WD-1 in Lab 3 Setup at a proficient level.
 
 I demonstrated WD-2 in Lab 3 Problem 7 at a proficient level.
 
@@ -41,7 +41,7 @@ I demonstrated DVS-1 in Challenge 3 Problem 1 and in Challenge 9 Spelling by Sta
 
 I demonstrated DVS-2 in Challenge 9 Spelling by State Problem 1 at a proficient level.
 
-I demonstrated DVS-3 in Lab 4 Problem 7 and Spelling by State Problem 1 at a moderate level.
+I demonstrated DVS-3 in Lab 4 Problem 7 and Challenge 9 Spelling by State Problem 1 at a moderate level.
 
 I demonstrated DVS-4 in Challenge 3 Problem 1 at a proficient level.
 
