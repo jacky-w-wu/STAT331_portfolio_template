@@ -9,23 +9,23 @@
 
 ### Demonstration of Learning Targets
 
-Working With Data Folder:
+#### Working With Data 
 
 Lab 2, Lab 3, Challenge 3, Lab 4, Challenge 4, Lab 8, Lab 9
 
-Reproducibility Folder:
+#### Reproducibility 
 
 Challenge 9, Lab 9
 
-Data Visualization & Summarization Folder:
+#### Data Visualization & Summarization 
 
 Challenge 3, Lab 4, Challenge 9
 
-Program Efficiency Folder:
+#### Program Efficiency 
 
 Lab 5, Lab 8
 
-Data Simulation & Modeling Folder:
+#### Data Simulation & Modeling Folder
 
 Practice Activity 9, Lab 9
 
