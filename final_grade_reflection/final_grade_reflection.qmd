@@ -41,4 +41,4 @@ I done several revisions, but the only revision where I felt that I improved the
 
 ## Peer Support
 
-I did a poor job in demonstrating peer support. I was catching up on assignments throughout the whole quarter. This caused me to be unable to provide code feedback to my peers. I was only able to peer review code on the last lab and challenge. However, I did contribute in helping my group in class and tried to help others in the group with their code whenever I could.\
+I did a poor job in demonstrating peer support. I was catching up on assignments throughout the whole quarter. This caused me to be unable to provide code feedback to my peers. I was only able to peer review code on the last lab. However, I did contribute in helping my group in class and tried to help others in the group with their code whenever I could.\
