@@ -1,0 +1,282 @@
+---
+title: "Challenge 9"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+# Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(knitr)
+library(DT)
+library(viridis)
+state_a <- read_csv(here::here("supporting_artifacts" , "Datasets", "StateNames_A.csv")) %>% 
+  rename(Sex = Gender)
+```
+
+# Preview of Dataset
+
+```{r}
+datatable(head(state_a,
+               10000),
+          class = 'cell-border stripe',
+          editable = 'cell',
+          colnames = c('Name of Babies' = 'Name',
+                       'Birthyear' = 'Year',
+                       'Sex of Baby' = 'Sex',
+                       'Frequency of Babies' = 'Count'),
+          caption = 'Table 0: Preview of Dataset',
+          filter = 'top'
+          )
+```
+
+# 3) Summarizing & Visualizing the Number of Allisons
+
+## 1.
+
+```{r}
+state_allison <- state_a %>% 
+  filter(Name == 'Allison') %>% 
+  pivot_wider(names_from = Sex, 
+              values_from = Count) %>% 
+  mutate(M = replace_na(
+    M, 0)
+  ) %>% 
+  group_by(State) %>% 
+  summarize(across(
+    'F':'M', .fns = sum)
+  )
+
+datatable(state_allison,
+          class = 'cell-border stripe',
+          editable = 'cell',
+          rownames = FALSE,
+          colnames = c('Female' = 'F',
+                       'Male' = 'M'),
+          caption = 'Table 1: Babies Named Allison for Each State',
+          filter = 'top'
+          )
+```
+
+## 2.
+
+```{r}
+state_female <- state_a %>% 
+  filter(Sex == 'F')
+kable(head(state_female),
+      "simple",
+      col.names = c('Name of Baby',
+                    'Birthyear',
+                    'Sex of Baby',
+                    'State',
+                    'Frequency of Babies'),
+      allign = "lccrr",
+      caption = "Table 2: Female Babies"
+      )
+```
+
+## 3.
+
+```{r}
+allison_year <- state_female %>% 
+  filter(Name == 'Allison') %>% 
+  group_by(Year) %>% 
+  summarize(across(
+    'Count', .fns = sum)
+  )
+kable(head(allison_year),
+      "simple",
+      col.names = c('Birthyear',
+                    'Frequency of Babies'),
+      caption = "Table 3: Number of Babies Named Allison per Year"
+      )
+```
+
+```{r}
+ggplot(data = allison_year, 
+       mapping = aes(
+         x = Year, y = Count)
+       ) +
+  geom_line() +
+  labs(x = 'Year', y = '', 
+  title = 'Graph 1: Number of Babies Named Allison per Year')
+```
+
+# 4) Modeling the Number of Allisons
+
+## 4.
+
+```{r}
+allison_mod <- allison_year %>% 
+  lm(Count ~ Year, data = .)
+```
+
+## 5.
+
+```{r}
+#| message: false
+ggplot(data = allison_year, 
+       mapping = aes(
+         x = Year, y = Count)
+       ) +
+  geom_point() +
+  stat_smooth(method = "lm") +
+  labs(x = 'Year', y = '', 
+  title = 'Graph 2: Regression Model Predicting Number of Babies Named Allison Using Year')
+```
+
+## 6.
+
+```{r}
+summary(allison_mod)
+```
+
+The estimate regression equation is:
+
+Count = 209689.76 - 101.52(Year)
+
+## 7.
+
+```{r}
+allison_df <- broom::augment(allison_mod)
+```
+
+```{r}
+ggplot(data = allison_df, 
+       mapping = aes(x = .fitted, y = .resid)
+       ) +
+  geom_point() +
+  labs(x = 'Fitted', y = '', 
+  title = 'Graph 3: Residual Vs. Fitted Model')
+```
+
+Looking at the residual plot, there seems to be a curvature pattern which means that a linear model might not be the best fit for our model.
+
+## 8.
+
+It does seem like the name Allison isn't as cool as it used to be. Our regression model shows that the predicted number of babies named Allison decreases by 101.52 as year increases by one. However, we need to be cautious with this conclusion since our residual plot shows a curvature pattern, which means that a linear model is not the best fit for our model.
+
+# Spelling By State
+
+## 9.
+
+```{r}
+state_allan <- state_a %>% 
+  filter(Sex == 'M',
+         Name %in% c(
+           'Allan', 'Alan', 'Allen')
+         )
+kable(head(state_allan),
+      "simple",
+      col.names = c('Name of Baby',
+                    'Birthyear',
+                    'Sex of Baby',
+                    'State',
+                    'Frequency of Babies'),
+      allign = "lccrr",
+      caption = "Table 4: Male Babies with the Name Allan, Alan, or Allen"
+      )
+```
+
+```{r}
+#| message: false
+allan_year <- state_allan %>% 
+  group_by(Name, Year) %>% 
+  summarize(across(
+    'Count', .fns = sum)
+  )
+kable(head(allan_year),
+      "simple",
+      col.names = c('Name of Baby',
+                    'Birthyear',
+                    'Frequency of Babies'),
+      allign = "lcr",
+      caption = "Table 5: Total Number of Babies per Year by Name"
+      )
+```
+
+```{r}
+ggplot(data = allan_year, 
+       mapping = aes(
+         x = Year, y = Count, color = fct_reorder2(
+           Name, Year, Count)
+         )
+       ) +
+  geom_line() +
+  scale_color_viridis_d() +
+  theme(text = element_text(
+    family = 'Times')
+    ) +
+  labs(x = 'Year', y = '', 
+  title = 'Graph 4: Number of Babies Named Alan, Allen, and Allan per Year',
+  color = 'Name of Babies')
+```
+
+## 10.
+
+```{r}
+allan_PA_CA <- state_allan %>% 
+  filter(Year == 2000,
+         State %in% c(
+           'PA','CA')
+         ) %>% 
+  mutate(Count = replace_na(
+    Count, 0)
+    ) %>% 
+  pivot_wider(names_from = Name, 
+              values_from = Count)
+kable(allan_PA_CA,
+      "simple",
+      col.names = c('Birthyear',
+                    'Sex of Baby',
+                    'State',
+                    'Number of Babies Named Alan',
+                    'Number of Babies Named Allen',
+                    'Number of Babies Named Allan'),
+      allign = "llccrr",
+      caption = "Table 6: Number of Babies Born in PA and CA for Each Spelling of Allan"
+      )
+```
+
+## 11.
+
+```{r}
+allan_percent <- allan_PA_CA %>%
+  mutate(Total = rowSums(across(
+    'Alan':'Allan')
+    ),
+    Alan = Alan/Total*100,
+    Allan = Allan/Total*100,
+    Allen = Allen/Total*100
+  ) %>% 
+  select(-Total)
+kable(allan_percent,
+      "simple",
+      col.names = c('Birthyear',
+                    'Sex of Baby',
+                    'State',
+                    'Number of Babies Named Alan',
+                    'Number of Babies Named Allen',
+                    'Number of Babies Named Allan'),
+      allign = "llccrr",
+      caption = "Table 7: Percentage Breakdown of Babies Born in PA and CA for Each Spelling of Allan"
+      )
+```
+
+I wanted to create a total column by adding the rows and this source helped me with this:
+
+https://stackoverflow.com/questions/3991905/sum-rows-in-data-frame-or-matrix
+
+For CA, the percent breakdowns for the three names are 65.35% for Alan, 19.85% for Allen, and 14.79% for Allan.
+
+For PA, the percent breakdowns for the three names are 42.86% for Alan, 47.05% for Allen, and 10.08% for Allan.
+
+This shows that Allan's spelling of his name is unusual even in his home state of PA, having only 10% of people with this spelling out of the three names.

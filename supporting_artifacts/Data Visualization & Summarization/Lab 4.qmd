@@ -1,0 +1,173 @@
+---
+title: "Lab 4"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+# **Introduction & Set-up**
+
+```{r}
+#| message: false
+library(tidyverse)
+avocado <- read_csv(here::here("supporting_artifacts" , "Datasets", "avocado.csv"))
+```
+
+Description:
+
+The avocado data set includes the average prices of avocados and the total amount of volume of avocados sold by region. The region includes US as a whole, major regions, and cities. The dataset also includes the date and the year that the avocados were sold. The avocados were also sorted by their size and if they were conventional or organic.
+
+```{r}
+# Look at the different regions easier
+avacodo_region <- avocado %>% 
+  select(region) %>% 
+  distinct()
+
+# Cleaned data for major regions
+major <- data.frame(region = c("Northeast", "West", "Southeast",
+                                      "SouthCentral", "Midsouth", "Plains"))
+major_region <- semi_join(avocado, major, by = "region")
+
+# Cleaned data for metro regions
+metro <- data.frame(region = c("Northeast", "West", "Southeast", 
+"SouthCentral", "Midsouth", "Plains", "California", "NorthernNewEngland",
+"SouthCarolina", "TotalUS", "WestTexNewMexico"))
+metro_region <- anti_join(avocado, metro, by = "region")
+```
+
+*You asked about Minnesota, Michigan, and Texas, but I don't see those regions in the data set.*
+
+# **Exercises**
+
+### 3)
+
+```{r}
+major_region %>% 
+  filter(type == 'organic', year == '2017') %>% 
+  select(`4046`, region) %>% 
+  slice_max(`4046`)
+```
+
+The major region that sold the most organic, small Hass avocados in 2017 is the Northeast.
+
+### 4)
+
+```{r}
+major_region %>% 
+  separate(col = Date, 
+           into = c('month' , 'day', 'year'), 
+           sep = '/') %>% 
+  select(month, `Total Volume`) %>% 
+  slice_max(`Total Volume`)
+```
+
+February had the highest volume of avocado sales.
+
+*I'm not sure how to fix this or why I'm not getting the same output as you. When I manually look at the dataset by descending order for Total Volume, I get the same result if I am excluding TotalUS as the region.*
+
+### 5)
+
+```{r}
+# Finding Top 5 Regions
+top_region <- metro_region %>% 
+  group_by(region) %>% 
+  summarize(across(`Total Volume`, .fns = mean)) %>% 
+  slice_max(`Total Volume`, n = 5)
+top_region
+```
+
+```{r}
+# dataset of top five regions
+five <- data.frame(region = c(top_region$region))
+top_five <- semi_join(avocado, five, by = "region")
+```
+
+```{r}
+# Boxplots
+ggplot(data = top_five, 
+       mapping = aes(x = region, y = `Total Volume`)) +
+  geom_boxplot() +
+  labs(x = "Metro Region", y = "Total Volume of Advacodos Sold")
+```
+
+# Reshaping
+
+### 6)
+
+```{r}
+# dataset of CA regions
+CA <- data.frame(region = c("LosAngeles", "SanDiego", "Sacramento", "SanFrancisco"))
+CA_region <- semi_join(avocado, CA, by = "region")
+```
+
+```{r}
+#| message: false
+# Averages of price for organic and conventional per region
+CA_type <- CA_region %>% 
+  group_by(region, type) %>%
+  summarize(across(AveragePrice, .fns = mean))
+CA_type
+```
+
+```{r}
+ggplot(data = CA_type, 
+       mapping = aes(x = region, y = AveragePrice, color = type)) +
+  geom_point() +
+  labs(x = "Region of CA", y = "Average Price of Avacodo")
+```
+
+```{r}
+CA_type %>% 
+  pivot_wider(names_from = 'region',  values_from = 'AveragePrice') %>% 
+  mutate(across('LosAngeles':'SanFrancisco',
+                .fns = diff),
+         across('LosAngeles':'SanFrancisco',
+                .fns = abs)
+  )
+```
+
+I created a plot where the the distances between the two points per regions shows the difference between average prices for organic versus conventional. I also calculated the differences between the average prices for the four regions and San Francisco is the region where the difference in average price between conventional and organic is the largest. The difference between conventional and organic in San Francisco is \$0.81.
+
+### 7)
+
+```{r}
+#| message: false
+# Creating Size Variables
+CA_size <- CA_region %>% 
+  mutate(Total = `4046` + `4225` + `4770`,
+         Small = `4046`/Total,
+         Large = `4225`/Total,
+         ExtraLarge = `4770`/Total) %>%
+  group_by(region, type) %>% 
+  summarize(across(Small:ExtraLarge,
+                   .fns = mean)) %>% 
+  pivot_longer("Small":"ExtraLarge", names_to = "Size",
+               values_to = "Proportion") 
+```
+
+```{r}
+# Changing levels
+CA_size <- CA_size %>% 
+  mutate(Size = as.factor(Size),
+         Size = fct_relevel(Size, c("Small", "Large", "ExtraLarge"))
+  )
+```
+
+```{r}
+# Plot
+ggplot(data = CA_size, 
+       mapping = aes(x = region, y = Proportion, fill = Size)) +
+  geom_col()+
+  facet_wrap(~type) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  labs(x = "Region of CA", y = "Proportion of Mean Avocados Sold")
+```
+
+# Reflection
+
+I learned that it is best to use the information in data frames that I created. I can save time and lines of code by simply grabbing the necessary information from the data frames. I also learned how to find the differences in multiple columns by mutating across the columns and using the function diff and abs. I also learned that I shouldn't always overwrite an object every time I edit it, in case I need to use the previous object later on in the project.
