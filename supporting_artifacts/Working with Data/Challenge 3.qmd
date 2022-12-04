@@ -1,0 +1,97 @@
+---
+title: "Challenge 3"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+hiphop <- read_csv(here::here("supporting_artifacts" , "Datasets" , "hiphop.csv"))
+distinct_hiphop <- hiphop %>%
+  distinct(subj, .keep_all = TRUE) %>% 
+  mutate(ethnic = ifelse(ethnic == 'white', "white", "non-white"),
+         ethnic = as.factor(ethnic))
+```
+
+# 1) Published Comparisons
+
+### Male vs. Female
+
+```{r}
+hiphop_sex <- distinct_hiphop %>% 
+  select(subj, sex, intl:unclassifiable) %>% 
+  group_by(sex) %>% 
+  summarize(across(intl:unclassifiable,
+                   .fns = mean)) %>% 
+  pivot_longer('intl':'unclassifiable', names_to = "Music_Genre",
+               values_to = "Mean") 
+```
+
+```{r}
+ggplot(data = hiphop_sex, 
+       mapping = aes(x = Music_Genre, y = Mean, color = sex)) +
+  geom_point() +
+  labs(x = "Music Genre", y = "Number of Artists Liked on Average")
+```
+
+```{r}
+hiphop_sex %>% 
+  pivot_wider(names_from = 'Music_Genre',  values_from = 'Mean') %>% 
+  mutate(across('intl':'unclassifiable',
+                .fns = diff),
+         across('intl':'unclassifiable',
+                .fns = abs)
+  )
+```
+
+I plotted the average number of artists liked on average for each genre and calculated the difference between male and females. Looking at the differences calculated, rock is the genre with the biggest difference between male and females, having a 1.13 difference between the two groups.
+
+### White vs. Non-White
+
+```{r}
+hiphop_ethnicity <- distinct_hiphop %>% 
+  select(subj, ethnic, intl:unclassifiable) %>% 
+  group_by(ethnic) %>% 
+  summarize(across(intl:unclassifiable,
+                   .fns = mean)) %>% 
+  pivot_longer('intl':'unclassifiable', names_to = "Music_Genre",
+               values_to = "Mean")
+```
+
+```{r}
+ggplot(data = hiphop_ethnicity, 
+       mapping = aes(x = Music_Genre, y = Mean, color = ethnic)) +
+  geom_point() +
+  labs(x = "Music Genre", y = "Number of Artists Liked on Average")
+```
+
+```{r}
+hiphop_ethnicity %>% 
+  pivot_wider(names_from = 'Music_Genre',  values_from = 'Mean') %>% 
+  mutate(across('intl':'unclassifiable',
+                .fns = diff),
+         across('intl':'unclassifiable',
+                .fns = abs)
+  )
+```
+
+I also did the same thing for the comparison between whites and non-whites and plotted and calculated the difference between the two groups. Looking at the differences calculated, international is the genre with the biggest difference between male and females, having a 1.59 difference between the two groups.
+
+# 2) Study Design Critique
+
+Just having 168 participants for this experiment is a concern for me, especially since they are also specifically students that are enrolled at University of Minnesota with specific majors. This just seems to specific for me and too small of a sample size for me to make any conclusion using this data set since it isn't representative of the population. Another concern that I have is the disproportion of ethnicity, where the majority of the participants are white. Considering that this is an experiment on African American English, it doesn't make sense to conduct the experiment with majority white people. It would be more logical and more representative if more African Americans were participants of the experiment.
+
+An AAE study that uses Black stereotypes to gauge people's understanding of Black culture and excluding Black individuals is morally wrong and blatantly racist. Instead of using stereotypes to understand Black culture, it would be better to just collect data on Black individuals to get an accurate representation of Black culture.
+
+# Reflection
+
+I learned that it is sometimes better to not do multiple steps in a single line. I thought that having a single line of code doing multiple actions would be more efficient coding, but I got to remember that it is humans reading my code. It would be easier for the person reading my code if it doesn't contain nested functions.
