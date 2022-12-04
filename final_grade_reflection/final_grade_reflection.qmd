@@ -5,16 +5,70 @@ format: pdf
 editor: visual
 ---
 
-# Week 6 Reflection
+# Final Reflection
 
-I believe that my current grade would be a C at this moment. I am still able to learn and demonstrate learning targets at a satisfactory level in my lab and challenges activities. The learning targets I believe that I have demonstrated an understanding of are working with data, data visualization and reproducibility. The problem is that I haven't been submitting my assignments on time due to time constraints. I just submitted Lab 4 and Challenge 3 and 4 this week and I still need to work on Lab 5. I approved on extending my learning as I have completed all the revisions I can, submitting one this week and completing an extra revision for this portfolio. As for collaborative group work, I do work with my group on assignments and try to help them whenever I can.
+I believe that my final grade I earned in this class is a B-.
 
-I have demonstrated several criteria of the learning target of working with data. I am able to import data such as CSV files and work on it in Rstudio as shown in both Lab 2 and my Lab 3 Revision. I am able to select the necessary columns I need to do my analysis using the select function which I accomplished in Lab 3 in problems 7 and the problem looking for Justin Bieber. I am able to filter out the data and only show data that are necessary to solve the problem at hand using the filter function such as the Justin Bieber problem in Lab 3. I am also able to modify existing variables or create new variables in a data frame by using the mutate function which I've shown throughout Lab 3.
+## Learning Targets
 
-As for data visualization, I am able to create different types of graphs using data from a data frame and I am able to provide the audience the ease of reading the graph by properly labeling my axis and providing a title. I have shown this in both Lab 2 and Lab 3 Revisions. Lab 2 focused more on data visualization and I have shown the different things I can add onto a graph such as jittering, faceting, and labeling. I can also create different types of graphs such as boxplots and histograms as shown in Lab 3 Problem 8. In that same problem, I demonstrated that I could label and facet.
+### Working with Data
 
-I also create professional looking Quarto documents by hiding messages that doesn't need to be shown such as the set up for the assignment as shown in both Lab 2 and Lab 3. I am also able to write tidy code as shown in my Lab 3 revision where I made sure to not compact code in a single line.
+I demonstrated WD-1 in Lab 2 Reading the Data into R Problem 1 at a proficient level.
 
- 
+I demonstrated WD-2 in Lab 3 Problem 7 at a proficient level.
+
+I demonstrated WD-3 in Lab 3 Problem 8 Study Subjects and in Lab 9 Spelling by State Problem 2 at a moderate level.
+
+I demonstrated WD-4 in Lab 4 Problem 7, Challenge 4 Problem 1, and Lab 8 Problem 4 at a proficient level.
+
+I demonstrated WD-5 in Challenge 4 Problem 1 at a proficient level.
+
+I demonstrated WD-6 in Lab 4 Set-up at a proficient level.
+
+I demonstrated WD-7 in Challenge 3 Problem 1 at a proficient level.
+
+### Reproducibility
+
+I demonstrated R-1 in Challenge 9 at a moderate level.
+
+I demonstrated R-2 in Lab 9 at a proficient level.
+
+I demonstrated R-3 in Lab 9 at a proficient level.
+
+### Data Visualization & Summarization
+
+I demonstrated DVS-1 in Challenge 3 Problem 1 and in Challenge 9 Spelling by State Problem 1 at a proficient level.
+
+I demonstrated DVS-2 in Challenge 9 Spelling by State Problem 1 at a proficient level.
+
+I demonstrated DVS-3 in Lab 4 Problem 7 and Spelling by State Problem 1 at a moderate level.
+
+I demonstrated DVS-4 in Challenge 3 Problem 1 at a proficient level.
+
+I demonstrated DVS-5 in Lab 4 Problem 7 at a proficient level.
+
+I demonstrated DVS-6 in Challenge 9 Problem 2 at a proficient level.
+
+I demonstrated DVS-7 in Challenge 9 Problem 1 at a proficient level.
+
+### Program Efficiency
+
+I demonstrated PE-1 in Lab 5 at a moderate level.
+
+I demonstrate PE-2 in Lab 8 Setup at a proficient level.
+
+I demonstrated PE-3 in Lab 8 Problem 3 at a proficient level.
+
+### Data Simulation & Modeling
+
+I demonstrated DSM-1 in Practice Activity 9 at a proficient level.
+
+I demonstrated DSM-2 in Lab 9 Problem 5 and 6 at a proficient level.
+
+## Continued Learning
+
+## Revising My Thinking
+
+## Peer Support
 
 \
