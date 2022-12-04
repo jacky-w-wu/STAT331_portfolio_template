@@ -1,0 +1,128 @@
+---
+title: "Challenge 4"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+avocado <- read_csv(here::here("supporting_artifacts" , "Datasets", "avocado.csv"))
+# housing data on median rental price for 1 bedroom found on zillow
+housing <- read_csv(here::here("supporting_artifacts" , "Datasets", "Median_House_Price.csv"))
+```
+
+# 1) Data Cleaning and Joining Datasets
+
+```{r}
+# dataset with only the 4 regions for avocado, including average avocado price
+CA <- data.frame(region = c("LosAngeles", "Sacramento",
+                            "SanDiego", "SanFrancisco"))
+CA_region <- semi_join(avocado, CA, by = "region")
+```
+
+```{r}
+#| message: false
+# average housing avocado only from 2015-2018
+mean_avocado <- CA_region %>% 
+  group_by(region, year) %>% 
+  summarize(across(
+    AveragePrice,
+    .fns = mean)
+  ) 
+```
+
+```{r}
+# dataset with only the 4 regions for housing
+CA_2 <- data.frame(RegionName = c("Los Angeles", "Sacramento",
+                                  "San Diego", "San Francisco"))
+CA_region_2 <- semi_join(housing, CA_2, by = "RegionName")
+```
+
+```{r}
+# average housing prices only from 2015-2018
+mean_housing <- CA_region_2 %>%
+  mutate(`2015` = rowMeans(
+    across(
+      `2015-01`:`2015-12`)
+    ), 
+    `2016` = rowMeans(
+      across(
+        `2016-01`:`2016-12`)
+      ), 
+    `2017` = rowMeans(
+      across(
+        `2017-01`:`2017-12`)
+      ), 
+    `2018` = rowMeans(
+      across(
+        `2016-01`:`2016-12`)
+      ), 
+  ) %>% 
+  select(RegionName, 
+         `2015`, 
+         `2016`, 
+         `2017`, 
+         `2018`) 
+```
+
+```{r}
+# Removing whitespaces so region name matches with avacado and also pivoting long
+mean_housing <- mean_housing %>%
+  mutate(across(
+    RegionName, 
+    str_remove_all,
+    pattern = fixed(" ")
+    )
+  ) %>% 
+  pivot_longer(`2015`:`2018`, names_to = "year",
+               values_to = "Average_house") %>% 
+  mutate(year = as.numeric(
+    year)
+    )
+```
+
+```{r}
+avacodo_housing <- 
+  left_join(mean_avocado, mean_housing, 
+            by = c('region' = 'RegionName', 'year' = 'year')
+  )
+```
+
+# 2) Plot of Average Avocado Prices Vs. Average Median House Rental Prices
+
+```{r}
+ggplot(data = avacodo_housing, 
+       mapping = aes(
+         x = year)
+       ) +
+  geom_line(
+    mapping = aes(
+       y = Average_house/1000
+    ),
+    color = "red"
+  ) +
+  geom_line(
+    mapping = aes(
+      y = AveragePrice,
+    ),
+    color = "blue"
+  ) +
+  facet_wrap(~region) +
+  labs(x = 'Year', y = '', 
+  title = 'Change in Average Avocado and House Renting Prices by Region')
+```
+
+# Conclusion
+
+I calculated the average price for avocados for each of the region every year. I did the same for housing prices and calculated the average median rental price for a one bedroom house for each of the region every year. Since the avocado data set only include years 2015 to 2018, I filtered out my housing data set to only include those years. I wanted to see the relationship between average avocado prices and average median house prices for each region. The easiest way to do this is to plot a short time-series. This allows me to simultaneously see what happens to housing prices when avocado prices increases or decreases. I divided housing prices by 1000 for the plot to make it easier to compare to avocado prices, which are single digits. Looking at the plots, the trend of housing prices seems to follow avocado prices for every region except San Francisco. This is especially true for San Diego as both housing prices and avocado prices have nearly an identical trend. This could help support the argument that Millennials can't afford houses because of the money spent on avocado toasts. Since housing prices tend to increase when avocado prices increase, it would be more difficult for us to buy a house if we spend money on avocados. Not only do we have less money saved since it costs more to buy avocados, we also save more due to the increase in house prices.
+
+However, I would be very cautious in using this data since there is not enough years to supply enough information and we also don't know if there is even a correlation between prices of avocados and houses. Correlation also does not mean causation.
