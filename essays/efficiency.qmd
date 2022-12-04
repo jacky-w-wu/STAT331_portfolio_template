@@ -1,26 +1,8 @@
 ---
 title: "The Power of Efficiency"
+author: Jacky Wu
 format: pdf
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
+Efficiency means doing something that achieves high productivity with minimum wasted effort. I believe that efficiency in statistical computing means not having to write repetitive code or unnecessary lines of code. Efficiency allows the program to run faster and smoother. Efficiency is important because it saves time makes it better for everyone. It helps the person writing the code to finish their project faster and it also helps the person reading the code understand it easier. I first encountered efficiency in Lab 2 Revision Problem 6. You mentioned that I had two different lines of code that did the same action. After that revision, I payed more attention to my lines of code to see if they would do the same action despite them being different code. Another lab that I encountered efficiency is throughout Challenge 8, where I used functions in the Setup and iterations in Problem 3. Functions allow us to be efficient since we can write a function once and just call it whenever we need to use it again. This saves us the trouble of rewriting a function over and over again. Iterations allow us to repeat a process simply by using a function. This saves us time from eliminating the need to repeat the same line of code for different variables.
