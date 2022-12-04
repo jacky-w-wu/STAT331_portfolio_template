@@ -1,0 +1,159 @@
+---
+title: "Challenge 8"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+# Setup
+
+```{r}
+#| message: false
+library(dplyr)
+library(glue)
+library(stringr)
+library(purrr)
+```
+
+```{r}
+xmas <- read.csv("https://www.dropbox.com/s/e584pryn8evm1gz/xmas.csv?dl=1")
+```
+
+```{r}
+pluralize_gift <- function(gift){
+
+if(str_detect(gift, "oo") == 'TRUE'){
+    gift <- gift %>% 
+      str_replace("oo", "ee")
+  } else{
+    gift <- gift %>% 
+      str_c("s", sep = "") %>% 
+      str_replace("ys$", "ies")
+  } 
+return(gift)
+
+}
+```
+
+```{r}
+make_phrase <- function(num_word, item, verb, adjective, location) {
+  
+  ## Step 1: Replace NAs with blank strings
+  verb <- str_replace_na(verb, "")
+  num_word<- str_replace_na(num_word, "")
+  item <- str_replace_na(item, "")
+  adjective <- str_replace_na(adjective, "")
+  location <- str_replace_na(location, "")
+  
+  ## Step 2: If the day is larger than 1, the items need pluralized! 
+  if(num_word != "one"){
+    item <- purrr::map_chr(item, pluralize_gift)
+  }
+  ## Step 3: If the word starts with a vowel, add "an" to the beginning
+  if(num_word == "one"){
+    num_word <- if_else(
+      (str_detect(
+        item, "^[a|e|i|o|u]") == 'TRUE'),
+      "an", "a")
+  }
+    
+
+  ## Step 4: Glue all of the pieces together! 
+  check <- glue::glue("{num_word} {adjective} {item} {verb} {location}")
+  check <- str_replace_all(check, "  ", " ")
+  check <- str_replace_all(check, "  ", " ")
+  return(check)
+}
+
+```
+
+```{r}
+xmas2 <- xmas %>%
+  mutate(day.num = as.character(english::english(Day)
+                                ), 
+    Full.Phrase = pmap_chr(
+      list(num_word = day.num,
+           item = Gift.Item,
+           verb = Verb,
+           adjective = Adjective,
+           location = Location),
+      make_phrase
+      )
+  )
+```
+
+## **1) Step Three: Iteration.**
+
+```{r}
+# Produces the string for one day of the song.
+# Arguments -- dataset -- A data frame containing information about gifts
+# Arguments -- line -- The number of the line for the day you want to sing about
+# Arguments -- phrase_col -- The variable name for the column in the dataset that contains the song phrases
+# Return -- A string singing the line of the song with all gifts for the given day.
+
+sing_line <- function(dataset, num, phrase_col){
+  
+  # Step 1: Setup the intro line
+  num_word <- as.character(english::ordinal(num))
+                                
+  
+  intro <- glue::glue(
+    "On the {num_word} day of Christmas, my true love sent to me:")
+  
+  # Step 2: Sing the gift phrases
+
+    phrases <- dataset %>% 
+      pull( {{phrase_col}} ) %>% 
+      .[num:1] 
+    
+  
+  ## put it together
+  full <- glue::glue_collapse(phrases,
+                              "\n",
+                              last = "and \n") 
+  full_2 <- glue::glue("{intro} \n {full} \n\n")
+  return(full_2)
+
+}
+```
+
+*I searched online on how to collapse a glue and found out about glue_collapse. This also allows me to separate each phase on its own line add "and" at the end of two turtle dove* *https://glue.tidyverse.org/reference/glue_collapse.html*.
+
+### **2) A Small Test**
+
+```{r}
+xmas2 %>% 
+sing_line(num = 2, phrase_col = Full.Phrase)
+```
+
+### **3) A Larger Test**
+
+```{r}
+map_chr(1:12, ~ sing_line(xmas2, .x, Full.Phrase)) |>
+  str_c(collapse = "\n") |>
+  cat()
+```
+
+## **4) Step Four: Use Your Functions!**
+
+```{r}
+xmas2 <- xmas |>
+  mutate(
+    day.num = as.character(english::english(Day)), 
+    Full.Phrase = pmap_chr(.l = list(num_word = day.num, 
+                                     item = Gift.Item, 
+                                     verb = Verb, 
+                                     adjective = Adjective, 
+                                     location = Location), 
+                           .f = make_phrase)
+  )
+
+map_chr(1:12, ~sing_line(xmas2, .x, Full.Phrase)) |>
+  str_c(collapse = "\n") |>
+  cat()
+```

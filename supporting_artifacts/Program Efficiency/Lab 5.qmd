@@ -1,0 +1,183 @@
+---
+title: "Lab 5"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+# 1 Revisiting Lab 2
+
+```{r setup}
+#| message: false
+library(tidyverse)
+library(here)
+library(forcats)
+surveys <- read_csv(here::here("supporting_artifacts" , "Datasets", "surveys.csv"))
+```
+
+### 1. Reorder
+
+```{r}
+surveys <- surveys %>% 
+  mutate(species = fct_reorder(
+    species, weight, .desc=TRUE)
+    )
+```
+
+```{r}
+ggplot(data = surveys, 
+       mapping = aes(
+         x = weight, y = species)
+       ) +
+  geom_jitter(color = "pink") +
+  geom_boxplot() +
+  labs(x = 'weight (grams)', y = 'species of rodents')
+```
+
+### 2. Y Axis Label at Top
+
+```{r}
+ggplot(data = surveys, 
+       mapping = aes(
+         x = weight, y = species)
+       ) +
+  geom_jitter(color = "pink") +
+  geom_boxplot() +
+  labs(x = 'weight (grams)', y = '', 
+  title = 'Distrubution of Weight by Rodent Species')
+```
+
+# 2 Time-Series Plot
+
+### 1. Visualization
+
+```{r}
+#| message: false
+survey_summary <- surveys %>% 
+  group_by(year, genus) %>% 
+  summarize(across(
+    weight, .fns = sum)
+    )
+```
+
+```{r}
+ggplot(data = survey_summary, 
+       mapping = aes(
+         x = year, y = weight, color = genus)
+       ) +
+  geom_line()
+```
+
+### 2. Mean weight
+
+```{r}
+#| message: false
+survey_mean <- surveys %>% 
+  group_by(year, genus) %>% 
+  summarize(across(
+      weight, .fns = mean)
+    )
+```
+
+```{r}
+ggplot(data = survey_mean, 
+       mapping = aes(
+         x = year, y = weight, color = genus)
+       ) +
+  geom_line()
+```
+
+## 3. Reorder
+
+```{r}
+ggplot(data = survey_mean, 
+       mapping = aes(
+         x = year, y = weight, color = fct_reorder2(
+    genus, year, weight))
+       ) +
+  geom_line()
+```
+
+## 4. Title
+
+```{r}
+ggplot(data = survey_mean, 
+       mapping = aes(
+         x = year, y = weight, color = fct_reorder2(
+    genus, year, weight))
+       ) +
+  geom_line() +
+  labs(x = 'Year', y = '', 
+  title = 'Change in Average Weight by Rodent Genus',
+  color = "Rodent Genus")
+```
+
+# 3 Captures over the Week
+
+## 1. Visualization
+
+```{r}
+survey_week <- surveys %>% 
+  drop_na
+```
+
+```{r}
+ggplot(data = survey_week,
+       mapping = aes(
+         x = day_of_week)
+       ) +
+  geom_bar() +
+  labs(x = 'Day of Week', y = '', 
+  title = 'Number of Rodents Captured Each Day of the Week')
+```
+
+## 2. Reorder
+
+```{r include = FALSE}
+survey_week <- survey_week %>% 
+  mutate(day_of_week <- as.factor(
+    day_of_week
+    ),
+    day_of_week = fct_relevel(
+      day_of_week, 
+      levels= c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+      )
+  )
+```
+
+```{r}
+ggplot(data = survey_week, 
+       mapping = aes(
+         x = day_of_week)
+       ) +
+  geom_bar() +
+  labs(x = 'Day of Week', y = '', 
+  title = 'Number of Rodents Captured Each Day of the Week')
+```
+
+## 3. Collapse
+
+```{r include = FALSE}
+#| message: false
+survey_collapse <- surveys %>% 
+  mutate(day_of_week = if_else(
+    day_of_week == c("Mon", "Tue", "Wed", "Thu", "Fri"),
+    "Weekday", "Weekend")
+  ) %>% 
+  drop_na
+```
+
+```{r}
+ggplot(data = survey_collapse, 
+       mapping = aes(
+         x = day_of_week)
+       ) +
+  geom_bar() +
+  labs(x = 'Day of Week', y = '', 
+  title = 'Number of Rodents Captured Each Day of the Week')
+```
