@@ -11,7 +11,7 @@
 
 #### Working With Data 
 
-Lab 2, Lab 3, Challenge 3, Lab 4, Challenge 4, Lab 8, Lab 9
+Lab 3, Challenge 3, Lab 4, Challenge 4, Challenge 8, Lab 9
 
 #### Reproducibility 
 
