@@ -7,6 +7,10 @@
 
 ## Supporting Artifacts 
 
+### Essays
+
+Lab 2 Revision, Lab 4, Challenge 8, Challenge 9
+
 ### Demonstration of Learning Targets
 
 #### Working With Data 
@@ -39,3 +43,4 @@ Lab 3 Revision
 
 ### Demonstration of Peer Support
 
+Peer Review
