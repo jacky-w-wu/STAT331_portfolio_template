@@ -31,10 +31,11 @@ Practice Activity 9, Lab 9
 
 ### Demonstration of Continued Learning
 
+Challenge 3, Challenge 4
+
 ### Demonstration of Revising My Thinking
 
 Lab 3 Revision
 
 ### Demonstration of Peer Support
 
-Peer Support Folder
