@@ -1,0 +1,15 @@
+---
+title: "Lightening Round Essays"
+format: pdf
+editor: visual
+---
+
+If Sebastian doesn't earn an A, then nobody should, because is on top of his work and tries to help his group whenever they need help.
+
+The most difficult part of the class for me is when we were on the topic of factors. It took me a long time to finally understand how to use the different functions related to factors and how to reorder and rename factors.
+
+The easiest part of the class for me was functions because I learned functions in a Python class and it was very similar to do in R.
+
+The topic of joining datasets was the most interesting for me. I know that sometimes one dataset isn't enough to complete an analysis and that multiple datasets might be needed. I found it nice that we can join datasets easily which can help us tremendously in completing an analysis.
+
+One piece of advice I would give to a student taking this class would to not procrastinate just because there is no hard due date. This was the problem I encountered and it caused me to play catch up the entire quarter. I felt like I could have demonstrated and done much more work if I just completed my assignments on time.

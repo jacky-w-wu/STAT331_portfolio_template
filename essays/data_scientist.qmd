@@ -1,0 +1,6 @@
+---
+title: "Data Scientist"
+author: Jacky Wu
+format: pdf
+editor: visual
+---
