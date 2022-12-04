@@ -4,3 +4,7 @@ author: Jacky Wu
 format: pdf
 editor: visual
 ---
+
+I believe that I am now better at taking a dataset, and pulling and editing necessary data to help with my analysis as a data scientist. Throughout the whole quarter, most of the labs and challenges requires us to do something to the dataset such as filtering and mutating to allow us to complete our analysis. I believe that the lab that helped me the most in growing in this area would be in Lab 4. This lab allowed me to practice joining different datasets, transforming dataframes from wide to long and vise versa, and used various other functions like filter, mutate, and group_by. All of these skills are necessary for a data scientist to know to be able to do their analysis easier.
+
+I also believe that I am better at creating visualizations that are professional and provide the necessary information for my audience. This is a great skill for a data scientist to have. It doesn't matter if you are able to do the analysis if you have no way to present it. Not everyone is going to have a background in data and statistics, so it would be hard for those people to understand the analysis. The best way to help these people understand would be to create professional and easy to understand visualizations. I believe Challenge 9 is where I really got to grow in making presentable visualizations. This challenge helped me make graphs that are professional looking and also make professional looking tables that also allow the audience to interact with the table.
