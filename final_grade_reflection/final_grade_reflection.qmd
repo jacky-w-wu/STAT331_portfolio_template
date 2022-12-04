@@ -37,11 +37,11 @@ I demonstrated R-3 in Lab 9 at a proficient level.
 
 ### Data Visualization & Summarization
 
-I demonstrated DVS-1 in Challenge 3 Problem 1 and in Challenge 9 Spelling by State Problem 1 at a proficient level.
+I demonstrated DVS-1 in Challenge 3 Problem 1 and in Challenge 9 Problem 9 at a proficient level.
 
-I demonstrated DVS-2 in Challenge 9 Spelling by State Problem 1 at a proficient level.
+I demonstrated DVS-2 in Challenge 9 Problem 9 at a proficient level.
 
-I demonstrated DVS-3 in Lab 4 Problem 7 and Challenge 9 Spelling by State Problem 1 at a moderate level.
+I demonstrated DVS-3 in Lab 4 Problem 7 and Challenge 9 Problem 9 at a moderate level.
 
 I demonstrated DVS-4 in Challenge 3 Problem 1 at a proficient level.
 
@@ -55,13 +55,13 @@ I demonstrated DVS-7 in Challenge 9 Problem 1 at a proficient level.
 
 I demonstrated PE-1 in Lab 5 at a moderate level.
 
-I demonstrate PE-2 in Lab 8 Setup at a proficient level.
+I demonstrate PE-2 in Challenge 8 Setup at a proficient level.
 
-I demonstrated PE-3 in Lab 8 Problem 3 at a proficient level.
+I demonstrated PE-3 in Challenge 8 Problem 3 at a proficient level.
 
 ### Data Simulation & Modeling
 
-I demonstrated DSM-1 in Practice Activity 9 at a proficient level.
+I demonstrated DSM-1 in Practice Activity 9 Problem 3 at a proficient level.
 
 I demonstrated DSM-2 in Lab 9 Problem 5 and 6 at a proficient level.
 

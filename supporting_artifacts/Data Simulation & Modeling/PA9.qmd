@@ -1,0 +1,37 @@
+---
+title: "PA9"
+author: Jacky Wu
+format: 
+  html:
+    self-contained: true
+execute: 
+  echo: true
+  message: false
+  warning: false
+---
+
+## 3) Catching a Con
+
+```{r}
+music_man <- function(n_tromb, n_cor, n_reed){
+  
+  trombones <- rnorm(n_tromb, 4.6, 0.8)
+  cornets <- runif(n_cor, 1.5, 3.5)
+  reeds <- rchisq(n_reed, 4)
+  total <- sum(trombones, cornets, reeds)
+  return(total)
+  
+}
+
+set.seed(1957)
+
+my_weights <- purrr::rerun(.n = 1000, 
+                    music_man(n_tromb = 76, n_cor = 110, n_reed = sum(542, 318, 175))
+                    ) |> 
+  purrr::flatten_dbl()
+```
+
+```{r}
+a <- dplyr::if_else(my_weights < 4532, TRUE, FALSE)
+sum(a)
+```
